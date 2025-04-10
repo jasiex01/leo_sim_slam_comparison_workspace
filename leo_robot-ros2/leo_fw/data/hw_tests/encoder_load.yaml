@@ -1,0 +1,10 @@
+tests:
+  - velocity: 2.0
+    time: 1.0
+    tolerance: 0.3
+  - velocity: -2.0
+    time: 2.0
+    tolerance: 0.3
+  - velocity: 1.0
+    time: 2.0
+    tolerance: 0.3
