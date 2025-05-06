@@ -1,0 +1,6 @@
+<launch>
+    <node name="slam_toolbox_node" pkg="slam_toolbox" exec="async_slam_toolbox_node">
+        <param from="$(find-pkg-share leo_gz_bringup)/config/slam_toolbox_config.yaml" />
+        <remap from="scan" to="/lidar/laserscan"/>
+    </node>
+</launch>
