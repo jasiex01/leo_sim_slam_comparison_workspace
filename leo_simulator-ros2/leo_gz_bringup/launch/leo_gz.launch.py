@@ -73,6 +73,7 @@ def generate_launch_description():
             "/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock",
             "/lidar/laserscan@sensor_msgs/msg/LaserScan[gz.msgs.LaserScan",
             "/camera/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked",
+            "/world/leo_empty/dynamic_pose/info@geometry_msgs/msg/PoseArray[ignition.msgs.Pose_V",
         ],
         parameters=[
             {

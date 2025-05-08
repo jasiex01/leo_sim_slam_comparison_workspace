@@ -4,3 +4,5 @@
         <remap from="scan" to="/lidar/laserscan"/>
     </node>
 </launch>
+
+<!-- DONT FORGET TO CONFIGURE AND ACTIVATE LIFECYCLE-->
