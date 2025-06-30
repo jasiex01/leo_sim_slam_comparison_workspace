@@ -82,14 +82,14 @@
         <visual name='visual'>
           <geometry>
             <mesh>
-              <uri>file:///home/jh/worlds-magisterka/office_small.obj</uri>
+              <uri>model://testing_worlds_models/office_small.obj</uri>
             </mesh>
           </geometry>
         </visual>
         <collision name='collision'>
           <geometry>
             <mesh>
-              <uri>file:///home/jh/worlds-magisterka/office_small.obj</uri>
+              <uri>model://testing_worlds_models/office_small.obj</uri>
             </mesh>
           </geometry>
         </collision>
