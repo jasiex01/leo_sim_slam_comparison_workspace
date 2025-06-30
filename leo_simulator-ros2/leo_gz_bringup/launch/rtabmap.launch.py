@@ -23,7 +23,22 @@ def launch_setup(context, *args, **kwargs):
           'Reg/Force3DoF':'true',
           'RGBD/NeighborLinkRefining':'True',
           'Grid/RangeMin':'0.2', # ignore laser scan points on the robot itself
-          'Optimizer/GravitySigma':'0' # Disable imu constraints (we are already in 2D)
+          'Optimizer/GravitySigma':'0', # Disable imu constraints (we are already in 2D)
+          'Grid/FromDepth': 'false',       # Use 2D laser instead of depth
+          'Grid/MaxObstacleHeight': '0.0', # Ignore height, 2D only
+          'Grid/MinClusterSize': '3',
+          'Grid/RangeMax': '12.0',         # Match LiDAR max range
+          'Grid/MapFrameRate': '1.0',      # Map update rate
+          'RGBD/OptimizeMaxError': '0.2',
+          'Reg/Force3DoF': 'true',         # Essential for 2D
+          'Reg/Strategy': '1',             # ICP
+          'ICP/RangeMin': '0.2',
+          'ICP/RangeMax': '12.0',
+          'ICP/CorrespondenceRatio': '0.2',
+          'ICP/MaxCorrespondenceDistance': '0.5',
+          'ICP/Iterations': '30',
+          'ICP/Epsilon': '0.0001',
+          'ICP/PointToPlane': 'false',
     }
     arguments = []
     if localization:
@@ -33,7 +48,8 @@ def launch_setup(context, *args, **kwargs):
         arguments.append('-d') # This will delete the previous database (~/.ros/rtabmap.db)
                
     remappings=[
-          ('scan', '/lidar/laserscan')]
+          ('scan', '/lidar/laserscan'),
+          ('imu', '/imu/data_raw'),]
     if icp_odometry:
         remappings.append(('odom', 'icp_odom'))
     
@@ -46,7 +62,17 @@ def launch_setup(context, *args, **kwargs):
             package='rtabmap_odom', executable='icp_odometry', output='screen',
             parameters=[parameters, 
                         {'odom_frame_id':'icp_odom',
-                         'guess_frame_id':'odom'}],
+                         'guess_frame_id':'odom',
+                         'frame_id': 'base_footprint',
+                         'subscribe_scan': True,
+                         'use_imu': False,
+                         'Scan/RangeMin': '0.2',
+                         'Scan/RangeMax': '12.0',
+                         'Scan/MinAngle': '-3.14',
+                         'Scan/MaxAngle': '3.14',
+                         'Scan/AngleIncrement': '0.004363',  # e.g. 0.25 deg (for 360°/1024)
+                         'Icp/DownsamplingStep': '1'
+                         }],
             remappings=remappings),
         
         # SLAM:
@@ -70,7 +96,7 @@ def generate_launch_description():
             description='Launch in localization mode.'),
         
         DeclareLaunchArgument(
-            'icp_odometry', default_value='true',
+            'icp_odometry', default_value='false',
             description='Launch ICP odometry on top of wheel odometry.'),
 
         OpaqueFunction(function=launch_setup)

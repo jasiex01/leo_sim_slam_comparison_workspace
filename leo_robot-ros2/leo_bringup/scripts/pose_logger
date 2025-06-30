@@ -19,8 +19,8 @@ class PoseLoggerNode(Node):
         self.sub = self.create_subscription(Odometry, '/gt_odom', self.gt_callback, 1)
         self.timer = self.create_timer(5.0, self.timer_callback)
 
-        #self.output_file = os.path.join(os.getcwd(), 'pose_log.csv')
-        #self.write_header()
+        self.output_file = os.path.join(os.getcwd(), 'pose_log.csv')
+        self.write_header()
 
     def write_header(self):
         if not os.path.exists(self.output_file):
@@ -50,9 +50,9 @@ class PoseLoggerNode(Node):
 
             timestamp = self.get_clock().now().nanoseconds / 1e9
 
-            #with open(self.output_file, mode='a', newline='') as f:
-            #    writer = csv.writer(f)
-            #    writer.writerow([f"{timestamp:.2f}", slam_x, slam_y, gt_x, gt_y])
+            with open(self.output_file, mode='a', newline='') as f:
+                writer = csv.writer(f)
+                writer.writerow([f"{timestamp:.2f}", slam_x, slam_y, gt_x, gt_y])
 
             self.get_logger().info(f"[{timestamp:.2f}s] Sampled poses: {slam_x:.2f}, {slam_y:.2f} | {gt_x:.2f}, {gt_y:.2f}")
         except Exception as e:

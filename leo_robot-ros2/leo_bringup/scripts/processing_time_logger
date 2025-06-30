@@ -23,11 +23,11 @@ class RtabmapProcessingLogger(Node):
             1)
         
         # CSV file setup
-        #self.csv_file_path = os.path.join(os.path.expanduser('~'), 'rtabmap_processing_log.csv')
-        #self.csv_file = open(self.csv_file_path, mode='w', newline='')
-        #self.csv_writer = csv.writer(self.csv_file)
-        #self.csv_writer.writerow(['ros_time_sec', 'processing_time_ms'])
-        #self.get_logger().info(f"Logging to {self.csv_file_path}")
+        self.csv_file_path = os.path.join(os.path.expanduser('~/magisterka_ws'), 'processing_time_log.csv')
+        self.csv_file = open(self.csv_file_path, mode='w', newline='')
+        self.csv_writer = csv.writer(self.csv_file)
+        self.csv_writer.writerow(['ros_time_sec', 'processing_time_ms'])
+        self.get_logger().info(f"Logging to {self.csv_file_path}")
 
     def info_callback(self, msg: Info):
         key = 'RtabmapROS/TimeTotal/ms'
@@ -37,18 +37,18 @@ class RtabmapProcessingLogger(Node):
                 processing_time = msg.stats_values[index]
                 ros_time = self.get_clock().now().to_msg()
                 ros_time_sec = ros_time.sec + ros_time.nanosec * 1e-9
-                #self.csv_writer.writerow([ros_time_sec, processing_time])
+                self.csv_writer.writerow([ros_time_sec, processing_time])
                 self.get_logger().info(f"Logged: time={ros_time_sec:.3f}, processing={processing_time:.2f} ms")
 
     def gmapping_callback(self, msg: Float64):
         ros_time = self.get_clock().now().to_msg()
         ros_time_sec = ros_time.sec + ros_time.nanosec * 1e-9
-        # self.csv_writer.writerow([ros_time_sec, '', msg.data])
+        self.csv_writer.writerow([ros_time_sec, '', msg.data])
         self.get_logger().info(f"Logged: time={ros_time_sec:.3f}s, processing={msg.data:.2f} ms")
 
 
     def destroy_node(self):
-        #self.csv_file.close()
+        self.csv_file.close()
         super().destroy_node()
 
 def main(args=None):

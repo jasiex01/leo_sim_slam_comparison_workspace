@@ -1,18 +1,22 @@
 <launch>
     <include file="$(find-pkg-share leo_gz_bringup)/launch/leo_gz.launch.py">
-        <arg name="sim_world" value="abstract_world.sdf"/>
+        <arg name="sim_world" value="warehouse_world.sdf"/>
     </include>
-    <node name="ground_truth_odom" pkg="leo_bringup" exec="ground_truth_odom">
+    <!-- <node name="ground_truth_odom" pkg="leo_bringup" exec="ground_truth_odom">
         <param name="use_sim_time" value="true"/>
     </node>
     <node name="pose_logger" pkg="leo_bringup" exec="pose_logger">
         <param name="use_sim_time" value="true"/>
     </node>
 
+    <node name="processing_time_logger" pkg="leo_bringup" exec="processing_time_logger">
+        <param name="use_sim_time" value="true"/>
+    </node> -->
+
     <!-- Comment out and change algorithm-->
     <!-- <include file="$(find-pkg-share leo_gz_bringup)/launch/slam_toolbox.launch.xml" /> -->
     <!-- <include file="$(find-pkg-share leo_gz_bringup)/launch/gmapping.launch.xml"/> -->
     <!-- <include file="$(find-pkg-share leo_gz_bringup)/launch/rtabmap.launch.py"/> -->
-    <!-- <include file="$(find-pkg-share leo_gz_bringup)/launch/rgbd_rtabmap.launch.py"/> -->
-    <include file="$(find-pkg-share leo_gz_bringup)/launch/cartographer.launch.py"/>
+    <include file="$(find-pkg-share leo_gz_bringup)/launch/rgbd_rtabmap.launch.py"/>
+    <!-- <include file="$(find-pkg-share leo_gz_bringup)/launch/cartographer.launch.py"/> -->
 </launch>
