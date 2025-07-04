@@ -16,7 +16,7 @@ install(
     scripts/leo_system
     scripts/ground_truth_odom
     scripts/pose_logger
-    scripts/processing_time_logger
+    scripts/ram_logger
   DESTINATION lib/${PROJECT_NAME}
 )
 
