@@ -1,7 +1,7 @@
 <launch>
-    <include file="$(find-pkg-share leo_gz_bringup)/launch/leo_gz.launch.py">
+    <!--<include file="$(find-pkg-share leo_gz_bringup)/launch/leo_gz.launch.py">
         <arg name="sim_world" value="warehouse_world.sdf"/>
-    </include>
+    </include>-->
     <node name="ground_truth_odom" pkg="leo_bringup" exec="ground_truth_odom">
         <param name="use_sim_time" value="true"/>
     </node>
